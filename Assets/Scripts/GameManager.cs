@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     public bool GameActive { get; private set; }
 
     [Header("General Settings")]
-    [SerializeField] UnityEvent victory;
+    [SerializeField] UnityEvent onVictory;
+    [SerializeField] UnityEvent onFail;
     [SerializeField] float victoryWaitTime;
     [SerializeField] float gameOverWaitTime;
     [SerializeField] float carFinalAnimDelay;
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
     {
         GameActive = false;
 
-        victory.Invoke();
+        onVictory.Invoke();
 
         //Play victory animation for every car
         foreach (Mover car in _cars)
@@ -65,6 +66,8 @@ public class GameManager : MonoBehaviour
     IEnumerator ProcessGameOver()
     {
         GameActive = false;
+
+        onFail.Invoke();
 
         Time.timeScale = 0;
 
